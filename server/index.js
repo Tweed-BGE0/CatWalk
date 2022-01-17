@@ -14,7 +14,7 @@ const serverCache = {}
 app.get('/api/*', (req, res) => {
   var sub = req.url.substring(5)
 
-  var url;
+  var url; // for other members of sdc project. change 'products/' to whatever your route would include and change url to be whatever port your api server is running on
   if (sub.includes('products/')) {
     url = `http://localhost:8080/${sub}`
   } else {

@@ -14,7 +14,12 @@ const serverCache = {}
 app.get('/api/*', (req, res) => {
   var sub = req.url.substring(5)
 
-  let url = `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/${sub}`;
+  var url;
+  if (sub.includes('products/')) {
+    url = `http://localhost:8080/${sub}`
+  } else {
+    url = `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/${sub}`;
+  }
 
   if (serverCache[sub] !== undefined) {
     res.send(serverCache[sub])

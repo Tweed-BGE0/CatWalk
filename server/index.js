@@ -26,7 +26,6 @@ app.get('/api/*', (req, res) => {
   //   res.send(serverCache[sub])
   // } else
   if (sub.includes('products')){
-    console.log('hello')
     axios.get(url)
     .then(result => {
       // serverCache[sub] = result.data

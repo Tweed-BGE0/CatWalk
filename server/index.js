@@ -13,16 +13,27 @@ const serverCache = {}
 
 app.get('/api/*', (req, res) => {
   var sub = req.url.substring(5)
-
   var url; // for other members of sdc project. change 'products/' to whatever your route would include and change url to be whatever port your api server is running on
-  if (sub.includes('products/')) {
+
+
+  if (sub.includes('products')) {
     url = `http://localhost:8080/${sub}`
   } else {
     url = `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/${sub}`;
   }
 
-  if (serverCache[sub] !== undefined) {
-    res.send(serverCache[sub])
+  // if (serverCache[sub] !== undefined) {
+  //   res.send(serverCache[sub])
+  // } else
+  if (sub.includes('products')){
+    console.log('hello')
+    axios.get(url)
+    .then(result => {
+      // serverCache[sub] = result.data
+      res.send(result.data)
+    })
+    .catch(err => {
+      res.status(400).send(err)});
   } else {
     axios.get(url, {
       headers: {
@@ -31,9 +42,6 @@ app.get('/api/*', (req, res) => {
       }
     })
     .then(result => {
-      if (sub.includes('products/')){
-        serverCache[sub] = result.data
-      }
       res.send(result.data)
     })
     .catch(err => {
